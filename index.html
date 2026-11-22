@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Anniversary Mummy & Papa</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="floating-decor decor1">♡</div>
+  <div class="floating-decor decor2">✦</div>
+  <div class="floating-decor decor3">♡</div>
+  <div class="floating-decor decor4">✧</div>
+
+  <main class="page">
+
+    <header class="heading">
+      <p class="top-label">A little surprise made with love</p>
+      <h1>Happy Anniversary Mummy & Papa!</h1>
+      <p class="subtitle">A little machine filled with love, just for you ♡</p>
+    </header>
+
+    <section class="machine" id="machine">
+
+      <div class="machine-top">
+        <div class="lights">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <h2>LOVE MACHINE</h2>
+        <p class="machine-label">PRESS • SMILE • REPEAT</p>
+
+        <div class="display" id="screen">
+          <p>HELLO MUMMY & PAPA!</p>
+          <span>Choose a surprise below ♡</span>
+        </div>
+
+        <div class="buttons-grid">
+          <button class="surprise-button" onclick="dispense('note')">
+            <span class="button-icon">💌</span>
+            <span class="button-name">Love Note</span>
+          </button>
+
+          <button class="surprise-button" onclick="dispense('memory')">
+            <span class="button-icon">📸</span>
+            <span class="button-name">Memory</span>
+          </button>
+
+          <button class="surprise-button" onclick="dispense('star')">
+            <span class="button-icon">⭐</span>
+            <span class="button-name">Star</span>
+          </button>
+
+          <button class="surprise-button" onclick="dispense('cupcake')">
+            <span class="button-icon">🧁</span>
+            <span class="button-name">Sweetness</span>
+          </button>
+
+          <button class="surprise-button" onclick="dispense('gift')">
+            <span class="button-icon">🎁</span>
+            <span class="button-name">Gift</span>
+          </button>
+
+          <button class="surprise-button" onclick="dispense('wish')">
+            <span class="button-icon">✨</span>
+            <span class="button-name">Wish</span>
+          </button>
+        </div>
+
+        <div class="machine-bottom">
+
+          <div class="tray-label">YOUR LITTLE SURPRISE</div>
+
+          <div class="tray" id="output">
+            <span class="tray-placeholder">Your surprise will appear here ♡</span>
+          </div>
+
+          <div class="collection">
+            <p>Surprises collected</p>
+            <div class="collection-counter">
+              <span id="count">0</span> / 6
+            </div>
+            <div class="collection-icons" id="collectionIcons">
+              <span>♡</span><span>♡</span><span>♡</span>
+              <span>♡</span><span>♡</span><span>♡</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <footer>
+      <p>Made with endless love, just for you two ♡</p>
+    </footer>
+
+  </main>
+
+  <!-- Surprise popup -->
+  <div class="popup-overlay" id="popup">
+    <div class="popup-card">
+
+      <button class="close-button" onclick="closePopup()">×</button>
+
+      <div id="popupEmoji" class="popup-emoji">💗</div>
+
+      <h2 id="popupTitle">A little surprise!</h2>
+
+      <p id="popupMessage">Something special for you!</p>
+
+      <div class="popup-bottom">With love, always ♡</div>
+
+      <button class="popup-close" onclick="closePopup()">Aww, thank you ♡</button>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
