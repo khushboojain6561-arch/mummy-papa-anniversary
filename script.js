@@ -49,6 +49,7 @@ const photos = [
 
 let currentPhoto = 0;
 let collected = [];
+let finalLetterShown = false;
 
 function dispense(type) {
   const machine = document.getElementById("machine");
@@ -59,7 +60,10 @@ function dispense(type) {
   void machine.offsetWidth;
   machine.classList.add("shake");
 
-  screen.innerHTML = `<p>DISPENSING...</p><span>Something lovely is coming ♡</span>`;
+  screen.innerHTML = `
+    <p>DISPENSING...</p>
+    <span>Something lovely is coming ♡</span>
+  `;
 
   setTimeout(() => {
     const item = surprises[type];
@@ -79,14 +83,16 @@ function dispense(type) {
       openPopup(item);
     }
 
-    screen.innerHTML = `<p>${item.title}</p><span>Surprise delivered! ♡</span>`;
+    screen.innerHTML = `
+      <p>${item.title}</p>
+      <span>Surprise delivered! ♡</span>
+    `;
 
     if (collected.length === 6) {
-      screen.innerHTML = `<p>ALL 6 COLLECTED! 💖</p><span>You've unlocked the celebration!</span>`;
-
-      setTimeout(() => {
-        showCelebration();
-      }, 3500);
+      screen.innerHTML = `
+        <p>ALL 6 COLLECTED! 💖</p>
+        <span>Your final surprise awaits! ♡</span>
+      `;
     }
 
   }, 400);
@@ -101,6 +107,13 @@ function openPopup(item) {
   message.textContent = item.message;
 
   document.getElementById("memoryGallery").style.display = "none";
+
+  document.querySelector(".popup-bottom").textContent =
+    "With love, always ♡";
+
+  document.querySelector(".popup-close").textContent =
+    "Aww, thank you ♡";
+
   document.getElementById("popup").classList.add("show");
 }
 
@@ -116,6 +129,12 @@ function openGallery() {
 
   document.getElementById("memoryGallery").style.display = "block";
 
+  document.querySelector(".popup-bottom").textContent =
+    "With love, always ♡";
+
+  document.querySelector(".popup-close").textContent =
+    "Aww, thank you ♡";
+
   currentPhoto = 0;
   showPhoto();
 
@@ -128,6 +147,7 @@ function showPhoto() {
   document.getElementById("memoryPhoto").src = photo.src;
   document.getElementById("memoryPhoto").alt = photo.caption;
   document.getElementById("memoryCaption").textContent = photo.caption;
+
   document.getElementById("photoCounter").textContent =
     `${currentPhoto + 1} / ${photos.length}`;
 }
@@ -167,55 +187,102 @@ function updateCollection() {
   }).join("");
 }
 
-function showCelebration() {
-  const popup = document.getElementById("popup");
+function closePopup() {
+  document.getElementById("popup").classList.remove("show");
 
-  document.getElementById("popupEmoji").textContent = "🎉💗🥂";
+  if (collected.length === 6 && !finalLetterShown) {
+    finalLetterShown = true;
+
+    setTimeout(() => {
+      showFinalLetter();
+    }, 800);
+  }
+}
+
+function showFinalLetter() {
+  document.getElementById("popupEmoji").textContent = "💌✨";
   document.getElementById("popupTitle").textContent =
-    "Happy Anniversary, Mummy & Papa!";
+    "One Last Surprise...";
 
   document.getElementById("popupMessage").style.display = "block";
-  document.getElementById("popupMessage").innerHTML = `
-    <div style="font-size:17px; line-height:1.8;">
-      You have unlocked every little surprise! ♡<br><br>
 
-      Through every season, every smile and every little moment,
-      your love has made our family a beautiful place to belong.<br><br>
+  document.getElementById("popupMessage").innerHTML = `
+    <div style="font-family:Georgia,serif; line-height:1.9; text-align:center; padding:8px;">
+      <div style="font-size:24px; margin-bottom:15px;">
+        To Mummy & Papa,
+      </div>
+
+      If love could be wrapped into a gift,
+      I would give you the whole world.
+      But today, I can only give you these little surprises
+      and a piece of my heart.
+
+      <br><br>
+
+      Thank you for every sacrifice, every encouragement,
+      every hug, every smile and every moment
+      you made me feel loved.
+
+      <br><br>
+
+      You taught me what love looks like,
+      not through words alone, but through
+      everything you do every single day.
+
+      <br><br>
+
+      I don't know what the future holds,
+      but I know that wherever life takes me,
+      a part of my heart will always belong to you both.
+
+      <br><br>
+
+      I hope you keep choosing each other,
+      laughing together, dreaming together
+      and creating beautiful memories together.
+
+      <br><br>
 
       <strong>
-        Thank you for being my home, my happiness
-        and my favourite people in the world.
-      </strong><br><br>
+        Happy Anniversary to the two people
+        who mean the world to me.
+      </strong>
 
-      Here's to many more years of love, laughter,
-      adventures and togetherness! 💗<br><br>
+      <br><br>
 
-      <span style="font-size:24px;">
-        I LOVE YOU BOTH FOREVER! ♡
-      </span>
+      <div style="font-size:24px;">
+        I love you endlessly. ♡
+      </div>
+
+      <br>
+
+      <div style="font-size:17px;">
+        — Your daughter 💗
+      </div>
     </div>
   `;
 
   document.getElementById("memoryGallery").style.display = "none";
 
   document.querySelector(".popup-bottom").textContent =
-    "A celebration of your love, made with all my heart ♡";
+    "This little website was made with all my love ♡";
 
   document.querySelector(".popup-close").textContent =
-    "Happy Anniversary! 💖";
+    "I love you both! 💗";
 
-  popup.classList.add("show");
+  document.getElementById("popup").classList.add("show");
 
   createConfetti();
 }
 
 function createConfetti() {
-  const colors = ["#ff69a6", "#ffd166", "#c084fc", "#ff8fab", "#a0e7e5"];
+  const emojis = ["💗", "✨", "🌸", "💕", "🎉"];
 
   for (let i = 0; i < 70; i++) {
     const piece = document.createElement("div");
 
-    piece.innerHTML = ["💗", "✨", "🌸", "💕", "🎉"][Math.floor(Math.random() * 5)];
+    piece.textContent =
+      emojis[Math.floor(Math.random() * emojis.length)];
 
     piece.style.position = "fixed";
     piece.style.left = Math.random() * 100 + "vw";
@@ -223,7 +290,8 @@ function createConfetti() {
     piece.style.fontSize = (Math.random() * 18 + 12) + "px";
     piece.style.zIndex = "9999";
     piece.style.pointerEvents = "none";
-    piece.style.animation = `confettiFall ${Math.random() * 3 + 3}s linear forwards`;
+    piece.style.animation =
+      `confettiFall ${Math.random() * 3 + 3}s linear forwards`;
 
     document.body.appendChild(piece);
 
@@ -251,8 +319,4 @@ function createConfetti() {
 
     document.head.appendChild(style);
   }
-}
-
-function closePopup() {
-  document.getElementById("popup").classList.remove("show");
 }
