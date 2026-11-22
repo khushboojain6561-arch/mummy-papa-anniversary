@@ -36,7 +36,6 @@ const surprises = {
   }
 };
 
-// Photo gallery
 const photos = [
   {
     src: "WhatsApp Image 2026-11-22 at 8.57.23 PM.jpeg",
@@ -54,7 +53,6 @@ const photos = [
 
 let currentPhoto = 0;
 let collected = [];
-let isGalleryOpen = false;
 
 function dispense(type) {
 
@@ -71,8 +69,6 @@ function dispense(type) {
     <span>Something lovely is coming ♡</span>
   `;
 
-  isGalleryOpen = false;
-
   setTimeout(() => {
 
     const item = surprises[type];
@@ -81,11 +77,6 @@ function dispense(type) {
 
     output.innerHTML = `
       <span class="dropped-item">${item.emoji}</span>
-    `;
-
-    screen.innerHTML = `
-      <p>${item.title}</p>
-      <span>Surprise delivered! ♡</span>
     `;
 
     if (!collected.includes(type)) {
@@ -100,10 +91,21 @@ function dispense(type) {
       openPopup(item);
     }
 
+    screen.innerHTML = `
+      <p>${item.title}</p>
+      <span>Surprise delivered! ♡</span>
+    `;
+
+    if (collected.length === 6) {
+      screen.innerHTML = `
+        <p>ALL 6 COLLECTED! 💖</p>
+        <span>You've unlocked the celebration!</span>
+      `;
+    }
+
   }, 400);
 }
 
-// Opens regular surprise popup
 function openPopup(item) {
 
   document.getElementById("popupEmoji").textContent = item.emoji;
@@ -119,10 +121,7 @@ function openPopup(item) {
   document.getElementById("popup").classList.add("show");
 }
 
-// Opens photo gallery
 function openGallery() {
-
-  isGalleryOpen = true;
 
   const item = surprises.memory;
 
@@ -142,7 +141,6 @@ function openGallery() {
   document.getElementById("popup").classList.add("show");
 }
 
-// Display selected photo
 function showPhoto() {
 
   const photo = photos[currentPhoto];
@@ -156,7 +154,6 @@ function showPhoto() {
     `${currentPhoto + 1} / ${photos.length}`;
 }
 
-// Next photo
 function nextPhoto() {
 
   currentPhoto++;
@@ -168,7 +165,6 @@ function nextPhoto() {
   showPhoto();
 }
 
-// Previous photo
 function previousPhoto() {
 
   currentPhoto--;
@@ -180,7 +176,6 @@ function previousPhoto() {
   showPhoto();
 }
 
-// Updates collected surprises
 function updateCollection() {
 
   document.getElementById("count").textContent = collected.length;
@@ -191,29 +186,16 @@ function updateCollection() {
 
   icons.innerHTML = allTypes.map(type => {
 
-    const emoji = surprises[type].emoji;
-
     if (collected.includes(type)) {
-      return `<span class="collected">${emoji}</span>`;
+      return `<span class="collected">${surprises[type].emoji}</span>`;
     }
 
     return `<span class="not-collected">♡</span>`;
 
   }).join("");
-
-  if (collected.length === 6) {
-
-    document.getElementById("screen").innerHTML = `
-      <p>ALL SURPRISES COLLECTED!</p>
-      <span>Sending you endless love ♡</span>
-    `;
-  }
 }
 
-// Close popup
 function closePopup() {
 
   document.getElementById("popup").classList.remove("show");
-
-  isGalleryOpen = false;
 }
